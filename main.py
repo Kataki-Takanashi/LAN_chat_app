@@ -145,6 +145,7 @@ else:
     # except socket.error as error:
     #     logger.error(f'{error} on {device}')
     #     # print(error)
+
 time.sleep(2.5)
 if make_server:
     print("No open server detected")

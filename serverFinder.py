@@ -17,7 +17,6 @@ class test:
             except socket.error as error:
                 return False
                 #print(error)
-
     def threadTeast(self, devices):
         def start_search_thread(devices):
             for i in devices:
