@@ -97,6 +97,7 @@ for i in devices:
         devices.remove(i)
 devices = priority #+ devices
 
+connectable_device = False
 
 make_server = True
 host = "192.168.4.24"  # "127.0.1.1"1`
@@ -158,8 +159,8 @@ if make_server:
     #my_socket.connect((host, port))
     print(f"Connected to {socket.gethostbyname(socket.gethostname())}")
     #print(f"Connected to {host}")
-else:
-    my_socket.connect((connectable_device, port))
+# else:
+#     my_socket.connect((connectable_device, port))
 
 
 def thread_sending():
