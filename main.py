@@ -6,12 +6,11 @@ import os
 import logging
 import time
 
-import server
 
 # Logging
 
 die = False
-logger = logging.getLogger(__name__)
+log = logging.getLogger(__name__)
 stream = logging.StreamHandler()
 file = logging.FileHandler('server.log')
 stream.setLevel(logging.WARNING)
@@ -19,8 +18,14 @@ file.setLevel(logging.ERROR)
 formater = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s', datefmt='%m/%d/%Y %H:%M:%S')
 stream.setFormatter(formater)
 file.setFormatter(formater)
-logger.addHandler(stream)
-logger.addHandler(file)
+log.addHandler(stream)
+log.addHandler(file)
+while True:
+    try:
+        import server
+        break
+    except socket.error as e:
+        log.error(e)
 
 sever = server.Server()
 nickname = input("Choose your nickname : ").strip()
@@ -66,12 +71,13 @@ itterDevice = 0
 for device in devices:
     try:
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        s.settimeout(0.2)
         s.connect((device, port))
         make_server = False
         connectable_device = device
         break
     except socket.error as error:
-        logger.error(f'{error} on {device}')
+        log.error(f'{error} on {device}')
 
 
 # Connects to a Server
