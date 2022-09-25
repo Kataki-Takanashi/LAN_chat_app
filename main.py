@@ -5,7 +5,6 @@ import threading
 import os
 import logging
 import time
-
 import server
 
 # Logging
@@ -21,13 +20,7 @@ stream.setFormatter(formater)
 file.setFormatter(formater)
 log.addHandler(stream)
 log.addHandler(file)
-while True:
-    try:
-        time.sleep(.2)
-        sever = server.Server()
-        break
-    except:
-        pass
+
 
 sever = server.Server()
 nickname = input("Choose your nickname : ").strip()
