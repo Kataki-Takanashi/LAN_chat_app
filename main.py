@@ -6,6 +6,7 @@ import os
 import logging
 import time
 
+import server
 
 # Logging
 
@@ -22,7 +23,6 @@ log.addHandler(stream)
 log.addHandler(file)
 while True:
     try:
-        import server
         sever = server.Server()
         break
     except:
