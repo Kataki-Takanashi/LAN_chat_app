@@ -23,6 +23,7 @@ log.addHandler(file)
 while True:
     try:
         import server
+        sever = server.Server()
         break
     except socket.error as e:
         log.error(e)
