@@ -1,43 +1,3 @@
-# # import
-# import socket
-# import threading
-#
-# # Settings
-#
-# PORT = 8000
-# ADDRESS = "localhost" # Same as "127.0.1.1"
-#
-# "Creating the socket object"
-# sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-#
-# "Connecting"
-# sock.connect((ADDRESS, PORT))
-#
-# msg = "msg"
-# # while msg != "/quit":
-# #     msg = input("Msg: >>> ")
-# #     # if msg == "/quit":
-# #     #     break
-# #     sock.send(msg.encode())
-#
-# def thread_sending():
-#     while True:
-#         msg = input("Msg: >>> ")
-#         sock.send(msg.encode())
-#
-#
-# def thread_receiving():
-#     while True:
-#         message = sock.recv(1024).decode()
-#         print(message)
-#
-#
-# thread_send = threading.Thread(target=thread_sending)
-# thread_receive = threading.Thread(target=thread_receiving)
-#
-# thread_send.start()
-# thread_receive.start()
-
 # client.py
 import socket
 import sys
@@ -47,10 +7,6 @@ import logging
 import time
 
 import server
-import serverFinder
-from tqdm import tqdm
-
-#from test1 import device
 
 # Logging
 
@@ -66,19 +22,21 @@ file.setFormatter(formater)
 logger.addHandler(stream)
 logger.addHandler(file)
 
-test = serverFinder.test()
 sever = server.Server()
 nickname = input("Choose your nickname : ").strip()
 while not nickname:
     nickname = input("Your nickname should not be empty : ").strip()
+
+# Initializing Socket
 my_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
+# Gets Servers
 devices = []
 print("Looking for open server. . .")
 for devise in os.popen('arp -a'):
     devices.append(devise.split()[1].strip("()"))  # .strip("()"))
-# print(devices)
-#filter
+
+# Filter
 
 for i in devices:
     delete = False
@@ -94,73 +52,41 @@ priority = []
 for i in devices:
     if i.startswith('192.168.4'):
         priority.append(i)
-        devices.remove(i)
+        #devices.remove(i)
 devices = priority #+ devices
 
-connectable_device = False
+# Checks Connectivity
+connectable_device = 'null' # Placeholder
 
 make_server = True
-host = "192.168.4.24"  # "127.0.1.1"1`
+host = "192.168.4.24"  # "127.0.1.1"
 port = 8000
 itterDevice = 0
 
-result = serverFinder.test.threadTeast(serverFinder.test(), devices)
-if result != False:
-    my_socket.connect((result, port))
-else:
-    #logger.info(f"No connection to {device}")
-    pass
+for device in devices:
+    try:
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        s.connect((device, port))
+        make_server = False
+        connectable_device = device
+        break
+    except socket.error as error:
+        logger.error(f'{error} on {device}')
 
-# def start_search_thread(devices):
-#     for i in devices:
-#         search_thread = threading.Thread(
-#             target=serch_thread,
-#             args=(i,),  # the list of argument for the function
-#             daemon=True
-#         )
-#
-#         search_thread.start()
-#
-# connectable_device = 'null' #placeholder
-# def serch_thread(device):
-#     try:
-#         my_socket.connect((device, port))
-#         make_server = False
-#         connectable_device = device
-#         print(f"Connected to {device}")
-#         return True
-#     except socket.error as error:
-#         logger.error(f'{error} on {device}')
-#         return False
-#     finally:
-#         my_socket.close()
-#         return
-#
-#
-# start_search_thread(devices)
-    # try:
-    #     my_socket.connect((device, port))
-    #     make_server = False
-    #     print(f"Connected to {device}")
-    #     break
-    # except socket.error as error:
-    #     logger.error(f'{error} on {device}')
-    #     # print(error)
 
-time.sleep(2.5)
+# Connects to a Server
 if make_server:
     print("No open server detected")
     print("Starting server")
     start_server = threading.Thread(target=sever.accept_loop)
-    # server.accept_loop()
     start_server.start()
     time.sleep(1)
     my_socket.connect((socket.gethostbyname(socket.gethostname()), port))
-    #my_socket.connect((host, port))
     print(f"Connected to {socket.gethostbyname(socket.gethostname())}")
     #print(f"Connected to {host}")
-# else:
-#     my_socket.connect((connectable_device, port))
+else:
+    my_socket.connect((connectable_device, port))
+    print(f"Connected to {connectable_device}")
 
 
 def thread_sending():
