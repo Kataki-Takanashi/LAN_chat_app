@@ -86,6 +86,8 @@ if make_server:
     print(f"Connected to {socket.gethostbyname(socket.gethostname())}")
     #print(f"Connected to {host}")
 else:
+    print(f"Connecting to {connectable_device}. . .")
+    sever = server.Server()
     my_socket.connect((connectable_device, port))
     print(f"Connected to {connectable_device}")
 
