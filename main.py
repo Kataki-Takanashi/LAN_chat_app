@@ -25,7 +25,7 @@ while True:
         import server
         sever = server.Server()
         break
-    except socket.error as e:
+    except OSError as e:
         log.error(e)
 
 sever = server.Server()
