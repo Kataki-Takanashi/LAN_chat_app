@@ -127,6 +127,6 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
-/main3.py
-!/main2.py
-!/serverFinder.py
+/Deleted/main3.py
+!/Deleted/main2.py
+!/Deleted/serverFinder.py
