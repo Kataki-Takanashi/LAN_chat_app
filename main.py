@@ -25,8 +25,8 @@ while True:
         import server
         sever = server.Server()
         break
-    except OSError as e:
-        log.error(e)
+    except:
+        pass
 
 sever = server.Server()
 nickname = input("Choose your nickname : ").strip()
