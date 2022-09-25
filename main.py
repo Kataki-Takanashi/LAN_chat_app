@@ -23,6 +23,7 @@ log.addHandler(stream)
 log.addHandler(file)
 while True:
     try:
+        time.sleep(.2)
         sever = server.Server()
         break
     except:
