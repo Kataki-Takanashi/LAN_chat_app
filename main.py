@@ -22,7 +22,6 @@ log.addHandler(stream)
 log.addHandler(file)
 
 
-sever = server.Server()
 nickname = input("Choose your nickname : ").strip()
 while not nickname:
     nickname = input("Your nickname should not be empty : ").strip()
@@ -78,7 +77,8 @@ for device in devices:
 # Connects to a Server
 if make_server:
     print("No open server detected")
-    print("Starting server")
+    print("Starting server. . .")
+    sever = server.Server()
     start_server = threading.Thread(target=sever.accept_loop)
     start_server.start()
     time.sleep(1)

@@ -89,8 +89,9 @@ class Server():
         while True:
             try:
                 self.my_socket.bind((self.ADDRESS, self.PORT))
+                break
             except OSError as e:
-                log.error(e)
+                pass
         self.die = False
 
 
