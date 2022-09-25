@@ -82,12 +82,12 @@ log.addHandler(file)
 class Server():
     def __init__(self):
 
-        self.my_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.PORT = 8000
-        self.ADDRESS = "0.0.0.0"
-        self.broadcast_list = []
         while True:
             try:
+                self.my_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                self.PORT = 8000
+                self.ADDRESS = "0.0.0.0"
+                self.broadcast_list = []
                 self.my_socket.bind((self.ADDRESS, self.PORT))
                 break
             except OSError as e:

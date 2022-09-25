@@ -21,7 +21,7 @@ file.setFormatter(formater)
 log.addHandler(stream)
 log.addHandler(file)
 
-
+# Setinng User's Name
 nickname = input("Choose your nickname : ").strip()
 while not nickname:
     nickname = input("Your nickname should not be empty : ").strip()
@@ -46,7 +46,6 @@ for i in devices:
     if delete:
         devices.remove(i)
 
-# Priority
 priority = []
 for i in devices:
     if i.startswith('192.168.4'):
@@ -75,7 +74,7 @@ for device in devices:
 
 
 # Connects to a Server
-if make_server:
+if make_server or connectable_device == 'null':
     print("No open server detected")
     print("Starting server. . .")
     sever = server.Server()
