@@ -249,7 +249,7 @@ class lanChat(QDialog):
         area = self.scrollArea_2
         vbar = area.verticalScrollBar()
         # vbar.setValue(vbar.maximum())
-        #vbar.
+        ##vbar.
         toc = ti.perf_counter()
         print(f"Time took: {toc - tic} seconds")
 
